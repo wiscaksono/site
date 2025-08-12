@@ -48,7 +48,8 @@ const config = {
 			rehypePlugins: [rehypeSlug]
 		})
 	],
-	kit: { adapter: adapter() },
+	kit: { adapter: adapter(), experimental: { remoteFunctions: true } },
+	compilerOptions: { experimental: { async: true } },
 	vitePlugin: {
 		inspector: {
 			toggleKeyCombo: 'meta-shift',

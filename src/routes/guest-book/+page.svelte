@@ -1,96 +1,8 @@
 <script lang="ts">
-	import { enhance } from '$app/forms';
-	import { flip } from 'svelte/animate';
 	import Metadata from '$lib/components/metadata.svelte';
+	import { getGuestsBook, insertGuestBook, toggleLikeGuestBook, deleteGuestBook } from './data.remote';
 
-	import type { PageProps, SubmitFunction } from './$types';
-
-	let { data }: PageProps = $props();
-
-	let insertContent = $state('');
-	let guestBooks = $derived(structuredClone(data.guestBooks));
-
-	const handleInsert: SubmitFunction = ({ formData }) => {
-		const content = formData.get('content') as string;
-		if (!data.user || !content) return;
-
-		// Use a negative random number for temporary ID to avoid potential clashes with real positive IDs
-		const tempId = -Math.floor(Math.random() * 1000000);
-
-		const optimisticEntry: (typeof guestBooks)[0] = {
-			id: tempId,
-			content,
-			createdAt: new Date(),
-			likeCount: 0,
-			liked: false,
-			userId: data.user.id,
-			username: data.user.username
-		};
-
-		// Optimistically update UI
-		guestBooks = [optimisticEntry, ...guestBooks];
-		const originalInsertContent = insertContent; // Store original content for potential revert
-		insertContent = '';
-
-		return async ({ result }) => {
-			if (result.type === 'success' && result.data && 'success' in result.data && 'newEntry' in result.data) {
-				const realEntry = result.data.newEntry;
-				const index = guestBooks.findIndex((gb) => gb.id === tempId);
-				if (index !== -1) {
-					guestBooks[index] = realEntry;
-					guestBooks = [...guestBooks];
-				}
-			} else if (result.type === 'error' || result.type === 'failure') {
-				guestBooks = guestBooks.filter((entry) => entry.id !== tempId);
-				insertContent = originalInsertContent;
-				console.error('Insert failed:', result);
-			}
-		};
-	};
-
-	const handleLike: SubmitFunction = ({ formData }) => {
-		const guestBookId = parseInt(formData.get('guestBookId') as string);
-		if (!data.user || guestBookId < 0) return;
-
-		const itemIndex = guestBooks.findIndex((gb) => gb.id === guestBookId);
-		if (itemIndex === -1) return;
-
-		const updatedItem = {
-			...guestBooks[itemIndex],
-			liked: !guestBooks[itemIndex].liked,
-			likeCount: guestBooks[itemIndex].likeCount + (guestBooks[itemIndex].liked ? -1 : 1)
-		};
-
-		guestBooks = guestBooks.map((item) => (item.id === guestBookId ? updatedItem : item));
-
-		return async ({ result }) => {
-			if (result.type === 'error' || result.type === 'failure') {
-				guestBooks = guestBooks.map((item) =>
-					item.id === guestBookId ? { ...item, liked: !updatedItem.liked, likeCount: item.likeCount + (updatedItem.liked ? 1 : -1) } : item
-				);
-				console.error('Like failed:', result);
-			}
-		};
-	};
-
-	const handleDelete: SubmitFunction = ({ formData }) => {
-		const guestBookId = parseInt(formData.get('guestBookId') as string);
-		if (guestBookId < 0) return;
-
-		const itemIndex = guestBooks.findIndex((gb) => gb.id === guestBookId);
-		if (itemIndex === -1) return;
-
-		const deletedItem = guestBooks[itemIndex];
-
-		guestBooks = guestBooks.filter((gb) => gb.id !== guestBookId);
-
-		return async ({ result }) => {
-			if (result.type === 'error' || result.type === 'failure') {
-				guestBooks = [...guestBooks.slice(0, itemIndex), deletedItem, ...guestBooks.slice(itemIndex)];
-				console.error('Delete failed:', result);
-			}
-		};
-	};
+	let data = $state(await getGuestsBook());
 </script>
 
 <Metadata
@@ -101,7 +13,15 @@
 <h1 class="sr-only">Wisnu Wicaksono's Guest Book</h1>
 
 <section class="flex-1 flex-grow space-y-1 overflow-y-auto px-3 lg:px-4">
-	<form action="?/insert" method="POST" class="flex flex-col gap-2 text-sm lg:flex-row lg:items-center" use:enhance={handleInsert}>
+	<form
+		class="flex flex-col gap-2 text-sm lg:flex-row lg:items-center"
+		{...insertGuestBook.enhance(async ({ submit, form }) => {
+			await submit().updates(getGuestsBook());
+			const latestData = await getGuestsBook();
+			data.guestBooks = latestData.guestBooks;
+			form.reset();
+		})}
+	>
 		<p class="truncate lg:w-36">
 			<span class="text-cyan">~</span>/{data.user ? data.user?.username?.toLowerCase().replace(/\s/g, '-') : 'guest'}
 		</p>
@@ -116,7 +36,6 @@
 			maxLength={140}
 			autoComplete="off"
 			disabled={!data.user}
-			bind:value={insertContent}
 			placeholder={data.user ? 'Leave a message' : 'Sign in to leave a message'}
 			class="placeholder-opacity-50 placeholder:text-ash-400 caret-cyan flex-1 bg-transparent focus:border-transparent focus:ring-0 focus:outline-none"
 		/>
@@ -138,8 +57,8 @@
 	</form>
 
 	<ul class="divide-ash-700 flex flex-col gap-y-1 divide-y text-sm lg:divide-y-0">
-		{#each guestBooks as item (item.id)}
-			<li animate:flip={{ duration: 200 }} class="group flex flex-col gap-1 py-1 lg:flex-row lg:gap-2 lg:border-y-0 lg:py-0" class:animate-pulse={item.id < 0}>
+		{#each data.guestBooks as item (item.id)}
+			<li class="group flex flex-col gap-1 py-1 lg:flex-row lg:gap-2 lg:border-y-0 lg:py-0" class:animate-pulse={item.id < 0}>
 				<p class="flex-1 truncate lg:w-36 lg:flex-none">
 					<span class="text-cyan">~</span>/{item.username.toLowerCase().replace(/\s/g, '-')}
 				</p>
@@ -148,34 +67,41 @@
 				<p class="hidden flex-1 lg:block">{item.content}</p>
 				{#if data.user && item.id > 0}
 					<div class="flex items-center justify-center gap-x-1">
-						<form action="?/like" method="POST" use:enhance={handleLike}>
-							<input type="hidden" name="guestBookId" value={item.id} />
+						<button
+							onclick={async () => {
+								await toggleLikeGuestBook(item.id).updates(getGuestsBook());
+								const latestData = await getGuestsBook();
+								data.guestBooks = latestData.guestBooks;
+							}}
+							class="flex items-center gap-x-1 opacity-100 transition-opacity group-hover:opacity-100 lg:opacity-0"
+							aria-label={item.liked ? 'Unlike' : 'Like'}
+						>
+							<span class="text-xs leading-none">
+								{item.likeCount}
+							</span>
+							<svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="stroke-ash-400" class:fill-ash-400={item.liked}>
+								<path
+									d="M11.0832 8.16667C11.9523 7.315 12.8332 6.29417 12.8332 4.95833C12.8332 4.10743 12.4952 3.29138 11.8935 2.6897C11.2918 2.08802 10.4757 1.75 9.62484 1.75C8.59817 1.75 7.87484 2.04167 6.99984 2.91667C6.12484 2.04167 5.4015 1.75 4.37484 1.75C3.52393 1.75 2.70788 2.08802 2.1062 2.6897C1.50452 3.29138 1.1665 4.10743 1.1665 4.95833C1.1665 6.3 2.0415 7.32083 2.9165 8.16667L6.99984 12.25L11.0832 8.16667Z"
+									stroke-width="1.5"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+								/>
+							</svg>
+						</button>
+						{#if item.userId === data.user.id}
 							<button
-								class="flex items-center gap-x-1 opacity-100 transition-opacity group-hover:opacity-100 lg:opacity-0"
-								aria-label={item.liked ? 'Unlike' : 'Like'}
+								aria-label="Delete"
+								class="flex items-center justify-center"
+								onclick={async () => {
+									await deleteGuestBook(item.id).updates(getGuestsBook());
+									const latestData = await getGuestsBook();
+									data.guestBooks = latestData.guestBooks;
+								}}
 							>
-								<span class="text-xs leading-none">
-									{item.likeCount}
-								</span>
-								<svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="stroke-ash-400" class:fill-ash-400={item.liked}>
-									<path
-										d="M11.0832 8.16667C11.9523 7.315 12.8332 6.29417 12.8332 4.95833C12.8332 4.10743 12.4952 3.29138 11.8935 2.6897C11.2918 2.08802 10.4757 1.75 9.62484 1.75C8.59817 1.75 7.87484 2.04167 6.99984 2.91667C6.12484 2.04167 5.4015 1.75 4.37484 1.75C3.52393 1.75 2.70788 2.08802 2.1062 2.6897C1.50452 3.29138 1.1665 4.10743 1.1665 4.95833C1.1665 6.3 2.0415 7.32083 2.9165 8.16667L6.99984 12.25L11.0832 8.16667Z"
-										stroke-width="1.5"
-										stroke-linecap="round"
-										stroke-linejoin="round"
-									/>
+								<svg width="14" height="14" fill="none" viewBox="0 0 14 14">
+									<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.5 3.5l-7 7M3.5 3.5l7 7" />
 								</svg>
 							</button>
-						</form>
-						{#if item.userId === data.user.id}
-							<form action="?/delete" method="POST" use:enhance={handleDelete}>
-								<input type="hidden" name="guestBookId" value={item.id} />
-								<button aria-label="Delete" class="flex items-center justify-center">
-									<svg width="14" height="14" fill="none" viewBox="0 0 14 14">
-										<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.5 3.5l-7 7M3.5 3.5l7 7" />
-									</svg>
-								</button>
-							</form>
 						{/if}
 					</div>
 				{/if}
