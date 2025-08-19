@@ -26,7 +26,7 @@
 	>
 		<div class="flex items-center space-x-1.5">
 			<Eye />
-			<span class={`transition-all duration-300 ${clicked ? 'mt-5 rotate-180' : 'mt-2.5'}`}>‿</span>
+			<span class={`duration-0 ${clicked ? 'mt-5 rotate-180' : 'mt-2.5'}`}>‿</span>
 			<Eye />
 		</div>
 	</div>

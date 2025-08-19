@@ -1,9 +1,9 @@
+import { fail } from '@sveltejs/kit';
 import { desc, eq, sql, count, and } from 'drizzle-orm';
-import { command, form, getRequestEvent, query } from '$app/server';
+import { command, form, getRequestEvent, prerender } from '$app/server';
 
 import { db } from '$lib/server/db';
 import * as table from '$lib/server/db/schema';
-import { fail } from '@sveltejs/kit';
 
 const getGuestBooksPrepared = db
 	.select({
@@ -22,7 +22,7 @@ const getGuestBooksPrepared = db
 	.orderBy(desc(table.guestBook.createdAt))
 	.prepare('get_guest_books');
 
-export const getGuestsBook = query(async () => {
+export const getGuestsBook = prerender(async () => {
 	const { locals } = getRequestEvent();
 
 	const currentUserId = locals.user?.id ?? null;
@@ -38,64 +38,42 @@ export const insertGuestBook = form(async (formData) => {
 	const content = formData.get('content') as string;
 	if (!content || content.trim().length < 3 || content.length > 140) return fail(400, { content, error: 'Invalid content length' });
 
-	try {
-		const [newEntry] = await db.insert(table.guestBook).values({ content, userId: locals.user.id, createdAt: new Date() }).returning({
-			id: table.guestBook.id,
-			content: table.guestBook.content,
-			userId: table.guestBook.userId,
-			createdAt: table.guestBook.createdAt
-		});
+	await db.insert(table.guestBook).values({ content, userId: locals.user.id, createdAt: new Date() }).returning({
+		id: table.guestBook.id,
+		content: table.guestBook.content,
+		userId: table.guestBook.userId,
+		createdAt: table.guestBook.createdAt
+	});
 
-		const returnedEntry = { ...newEntry, username: locals.user.username, liked: false, likeCount: 0 };
-
-		getGuestsBook().refresh();
-
-		return { success: true, newEntry: returnedEntry };
-	} catch (error) {
-		console.error('Failed to insert guestbook entry:', error);
-		return fail(500, { content, error: 'Failed to save message' });
-	}
+	await getGuestsBook().refresh();
 });
 
 export const toggleLikeGuestBook = command('unchecked', async (guestBookId: number) => {
 	const { locals } = getRequestEvent();
 	if (!locals.user) return fail(401, { error: 'Unauthorized' });
 
-	try {
-		await db.transaction(async (tx) => {
-			const [exist] = await tx
-				.select({ id: table.guestBookLike.guestBookId })
-				.from(table.guestBookLike)
-				.where(and(eq(table.guestBookLike.guestBookId, guestBookId), eq(table.guestBookLike.userId, locals.user!.id)));
+	await db.transaction(async (tx) => {
+		const [exist] = await tx
+			.select({ id: table.guestBookLike.guestBookId })
+			.from(table.guestBookLike)
+			.where(and(eq(table.guestBookLike.guestBookId, guestBookId), eq(table.guestBookLike.userId, locals.user!.id)));
 
-			if (exist) {
-				await tx.delete(table.guestBookLike).where(and(eq(table.guestBookLike.guestBookId, guestBookId), eq(table.guestBookLike.userId, locals.user!.id)));
-			} else {
-				const [guestBookExists] = await tx.select({ id: table.guestBook.id }).from(table.guestBook).where(eq(table.guestBook.id, guestBookId));
-				if (!guestBookExists) return;
-				await tx.insert(table.guestBookLike).values({ guestBookId: guestBookId, userId: locals.user!.id });
-			}
-		});
+		if (exist) {
+			await tx.delete(table.guestBookLike).where(and(eq(table.guestBookLike.guestBookId, guestBookId), eq(table.guestBookLike.userId, locals.user!.id)));
+		} else {
+			const [guestBookExists] = await tx.select({ id: table.guestBook.id }).from(table.guestBook).where(eq(table.guestBook.id, guestBookId));
+			if (!guestBookExists) return;
+			await tx.insert(table.guestBookLike).values({ guestBookId: guestBookId, userId: locals.user!.id });
+		}
+	});
 
-		getGuestsBook().refresh();
-		return { success: true };
-	} catch (error) {
-		console.error('Failed to update like status:', error);
-		return fail(500, { error: 'Could not update like status' });
-	}
+	await getGuestsBook().refresh();
 });
 
 export const deleteGuestBook = command('unchecked', async (guestBookId: number) => {
 	const { locals } = getRequestEvent();
 	if (!locals.user) return fail(401, { error: 'Unauthorized' });
 
-	try {
-		await db.delete(table.guestBook).where(and(eq(table.guestBook.id, guestBookId), eq(table.guestBook.userId, locals.user.id)));
-
-		getGuestsBook().refresh();
-		return { success: true };
-	} catch (error) {
-		console.error('Failed to delete guestbook entry:', error);
-		return fail(500, { error: 'Could not delete message' });
-	}
+	await db.delete(table.guestBook).where(and(eq(table.guestBook.id, guestBookId), eq(table.guestBook.userId, locals.user.id)));
+	await getGuestsBook().refresh();
 });
