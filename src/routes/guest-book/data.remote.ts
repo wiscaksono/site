@@ -1,6 +1,6 @@
 import { fail } from '@sveltejs/kit';
 import { desc, eq, sql, count, and } from 'drizzle-orm';
-import { command, form, getRequestEvent, prerender } from '$app/server';
+import { command, form, getRequestEvent, query } from '$app/server';
 
 import { db } from '$lib/server/db';
 import * as table from '$lib/server/db/schema';
@@ -22,7 +22,7 @@ const getGuestBooksPrepared = db
 	.orderBy(desc(table.guestBook.createdAt))
 	.prepare('get_guest_books');
 
-export const getGuestsBook = prerender(async () => {
+export const getGuestsBook = query(async () => {
 	const { locals } = getRequestEvent();
 
 	const currentUserId = locals.user?.id ?? null;
