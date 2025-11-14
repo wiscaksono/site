@@ -31,11 +31,9 @@ export const getGuestsBook = query(async () => {
 	return { user: locals.user, guestBooks };
 });
 
-export const insertGuestBook = form(async (formData) => {
+export const insertGuestBook = form('unchecked', async ({ content }: { content: string }) => {
 	const { locals } = getRequestEvent();
 	if (!locals.user) return fail(401, { error: 'Unauthorized' });
-
-	const content = formData.get('content') as string;
 	if (!content || content.trim().length < 3 || content.length > 140) return fail(400, { content, error: 'Invalid content length' });
 
 	await db.insert(table.guestBook).values({ content, userId: locals.user.id, createdAt: new Date() }).returning({
