@@ -23,15 +23,28 @@
 	ondblclick={toggleFullscreen}
 	onmousedown={onMouseDown}
 	onkeydown={handleHeaderKeyDown}
+	data-umami-event-ondblclick="window-dblclick"
 >
 	<div class="group absolute top-1/2 hidden -translate-y-1/2 items-center lg:flex">
-		<button class="grid h-6 w-6 place-items-center rounded-full" onclick={() => window.close()} aria-label="Close">
+		<button
+			class="grid h-6 w-6 place-items-center rounded-full"
+			onclick={() => window.close()}
+			aria-label="Close"
+			data-umami-event="window-control"
+			data-umami-event-action="close"
+		>
 			<div class="h-3 w-3 rounded-full bg-[#898989] transition-colors group-hover:bg-[#FF6057]"></div>
 		</button>
-		<button class="grid h-6 w-6 place-items-center rounded-full" aria-label="Minimize">
+		<button class="grid h-6 w-6 place-items-center rounded-full" aria-label="Minimize" data-umami-event="window-control" data-umami-event-action="minimize">
 			<div class="h-3 w-3 rounded-full bg-[#898989] transition-colors group-hover:bg-[#FEBC2D]"></div>
 		</button>
-		<button class="grid h-6 w-6 place-items-center rounded-full" onclick={toggleFullscreen} aria-label={isFullscreen ? 'Exit Fullscreen' : 'Enter Fullscreen'}>
+		<button
+			class="grid h-6 w-6 place-items-center rounded-full"
+			onclick={toggleFullscreen}
+			aria-label={isFullscreen ? 'Exit Fullscreen' : 'Enter Fullscreen'}
+			data-umami-event="window-control"
+			data-umami-event-action={isFullscreen ? 'exit-fullscreen' : 'enter-fullscreen'}
+		>
 			<div class="h-3 w-3 rounded-full bg-[#898989] transition-colors group-hover:bg-[#2BC840]"></div>
 		</button>
 	</div>

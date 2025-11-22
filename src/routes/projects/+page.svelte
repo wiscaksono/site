@@ -27,6 +27,9 @@
 			class="divide-ash-700 border-ash-700 divide-y overflow-hidden border select-none"
 			aria-label={`View details for project: ${article.title}`}
 			data-sveltekit-preload-code="eager"
+			data-umami-event="project-view"
+			data-umami-event-title={article.title}
+			data-umami-event-techstack={activeTechstack || 'all'}
 		>
 			<figure class="group relative aspect-video">
 				<img

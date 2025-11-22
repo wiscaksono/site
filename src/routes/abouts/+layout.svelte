@@ -13,6 +13,8 @@
 			<a
 				href={`/abouts/${post.slug}`}
 				class={`flex shrink-0 items-center gap-1.5 px-3 py-0.5 leading-none transition-all ${page.params.slug === post.slug ? 'bg-ash-300 text-ash-800' : 'text-ash-300'}`}
+				data-umami-event="about-tab"
+				data-umami-event-section={post.slug}
 			>
 				<Icon name={post.title.split('.').pop() ?? ''} />
 				{post.title}

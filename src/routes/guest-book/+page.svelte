@@ -56,9 +56,16 @@
 				class="placeholder-opacity-50 placeholder:text-ash-400 caret-cyan flex-1 bg-transparent focus:border-transparent focus:ring-0 focus:outline-none"
 			/>
 			{#if user}
-				<button class="bg-ash-400 text-ash-800 flex w-full items-center justify-center gap-2 gap-x-2 px-2 py-0.5 lg:w-[160px]">Submit</button>
+				<button
+					class="bg-ash-400 text-ash-800 flex w-full items-center justify-center gap-2 gap-x-2 px-2 py-0.5 lg:w-[160px]"
+					data-umami-event="guestbook-submit">Submit</button
+				>
 			{:else}
-				<a class="bg-ash-400 text-ash-800 flex w-full items-center justify-center gap-2 gap-x-2 px-2 py-0.5 lg:w-[160px]" href="/api/auth">
+				<a
+					class="bg-ash-400 text-ash-800 flex w-full items-center justify-center gap-2 gap-x-2 px-2 py-0.5 lg:w-[160px]"
+					href="/api/auth"
+					data-umami-event="guestbook-signin"
+				>
 					<svg width="14" height="14" fill="none" viewBox="0 0 14 14">
 						<path
 							fill="currentColor"
@@ -87,6 +94,8 @@
 								onclick={async () => await toggleLikeGuestBook(item.id)}
 								class="flex items-center gap-x-1 opacity-100 transition-opacity group-hover:opacity-100 lg:opacity-0"
 								aria-label={item.liked ? 'Unlike' : 'Like'}
+								data-umami-event="guestbook-like"
+								data-umami-event-action={item.liked ? 'unlike' : 'like'}
 							>
 								<span class="text-xs leading-none">
 									{item.likeCount}
@@ -101,7 +110,12 @@
 								</svg>
 							</button>
 							{#if item.userId === user.id}
-								<button aria-label="Delete" class="flex items-center justify-center" onclick={async () => await deleteGuestBook(item.id)}>
+								<button
+									aria-label="Delete"
+									class="flex items-center justify-center"
+									onclick={async () => await deleteGuestBook(item.id)}
+									data-umami-event="guestbook-delete"
+								>
 									<svg width="14" height="14" fill="none" viewBox="0 0 14 14">
 										<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.5 3.5l-7 7M3.5 3.5l7 7" />
 									</svg>
