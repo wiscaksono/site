@@ -68,8 +68,6 @@
 						{href}
 						data-sveltekit-preload-code="eager"
 						data-sveltekit-preload-data
-						data-umami-event="nav-click"
-						data-umami-event-page={title}
 						class={`text-ash-300 flex items-center px-2 py-0.5 leading-none transition-all ${isOnCurrentPath ? 'bg-ash-300 text-ash-800' : ''}`}
 						aria-label={`${title} (Shortcut: ${key})`}
 					>
