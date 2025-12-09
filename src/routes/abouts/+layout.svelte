@@ -7,12 +7,13 @@
 	let { children, data }: LayoutProps = $props();
 </script>
 
-<section class="flex-1 flex-grow overflow-y-auto px-3 lg:px-4">
+<section class="flex-1 grow overflow-y-auto px-3 lg:px-4">
 	<nav class="bg-ash-700 sticky top-0 z-50 mb-2 flex items-center overflow-x-auto select-none">
 		{#each data.posts as post, i (i)}
 			<a
 				href={`/abouts/${post.slug}`}
-				class={`flex shrink-0 items-center gap-1.5 px-3 py-0.5 leading-none transition-all ${page.params.slug === post.slug ? 'bg-ash-300 text-ash-800' : 'text-ash-300'}`}
+				class="text-ash-300 data-[active=true]:bg-ash-300 data-[active=true]:text-ash-800 flex shrink-0 items-center gap-1.5 px-3 py-0.5 leading-none transition-all"
+				data-active={page.params.slug === post.slug}
 				data-umami-event="about-tab"
 				data-umami-event-section={post.slug}
 			>

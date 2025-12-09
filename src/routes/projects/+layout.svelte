@@ -15,7 +15,8 @@
 		{#each data.techstacks as item, i (i)}
 			<a
 				href={item === 'All Projects' ? '/projects' : `/projects?techstack=${item}`}
-				class={`flex shrink-0 items-center gap-1.5 px-3 py-0.5 leading-none transition-all ${activeTechstack === item || (activeTechstack === '' && item === 'All Projects') ? 'bg-ash-300 text-ash-800' : 'text-ash-300'}`}
+				data-active={activeTechstack === item || (activeTechstack === '' && item === 'All Projects')}
+				class="text-ash-300 data-[active=true]:bg-ash-300 data-[active=true]:text-ash-800 flex shrink-0 items-center gap-1.5 px-3 py-0.5 leading-none transition-all"
 				aria-label={`Filter by ${item ?? 'All Projects'}`}
 			>
 				{#if item !== 'All Projects'}

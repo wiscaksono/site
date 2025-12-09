@@ -68,11 +68,12 @@
 						{href}
 						data-sveltekit-preload-code="eager"
 						data-sveltekit-preload-data
-						class={`text-ash-300 flex items-center px-2 py-0.5 leading-none transition-all ${isOnCurrentPath ? 'bg-ash-300 text-ash-800' : ''}`}
+						data-active={isOnCurrentPath}
+						class={`text-ash-300 data-[active=true]:bg-ash-300 data-[active=true]:text-ash-800 flex items-center px-2 py-0.5 leading-none transition-all ${isOnCurrentPath ? '' : ''}`}
 						aria-label={`${title} (Shortcut: ${key})`}
 					>
-						{parts.before}{#if parts.highlighted}<span class={`${isOnCurrentPath ? 'text-ash-800' : 'text-ash-100'} transition-all`}>{parts.highlighted}</span
-							>{/if}{parts.after}
+						{parts.before}{#if parts.highlighted}<span class={`${isOnCurrentPath ? 'text-ash-800' : 'text-ash-100'} transition-all`}>{parts.highlighted}</span>
+						{/if}{parts.after}
 					</a>
 				</li>
 			{/each}

@@ -11,7 +11,7 @@
 
 <h1 class="sr-only">Wisnu Wicaksono's Guest Book</h1>
 
-<section class="flex-1 flex-grow space-y-1 overflow-y-auto px-3 lg:px-4">
+<section class="flex-1 grow space-y-1 overflow-y-auto px-3 lg:px-4">
 	{#await getGuestsBook()}
 		<div class="grid h-full w-full place-items-center">
 			<svg
@@ -56,13 +56,12 @@
 				class="placeholder-opacity-50 placeholder:text-ash-400 caret-cyan flex-1 bg-transparent focus:border-transparent focus:ring-0 focus:outline-none"
 			/>
 			{#if user}
-				<button
-					class="bg-ash-400 text-ash-800 flex w-full items-center justify-center gap-2 gap-x-2 px-2 py-0.5 lg:w-[160px]"
-					data-umami-event="guestbook-submit">Submit</button
+				<button class="bg-ash-400 text-ash-800 flex w-full items-center justify-center gap-2 gap-x-2 px-2 py-0.5 lg:w-40" data-umami-event="guestbook-submit"
+					>Submit</button
 				>
 			{:else}
 				<a
-					class="bg-ash-400 text-ash-800 flex w-full items-center justify-center gap-2 gap-x-2 px-2 py-0.5 lg:w-[160px]"
+					class="bg-ash-400 text-ash-800 flex w-full items-center justify-center gap-2 gap-x-2 px-2 py-0.5 lg:w-40"
 					href="/api/auth"
 					data-umami-event="guestbook-signin"
 				>

@@ -8,7 +8,7 @@
 
 <Metadata title={data.meta.title + ' | Wiscaksono'} description={data.meta.description} image={data.meta.poster} />
 
-<header class="group border-ash-700 bg-ash-700 relative mb-5 aspect-video overflow-hidden border lg:aspect-[3/1]">
+<header class="group border-ash-700 bg-ash-700 relative mb-5 aspect-video overflow-hidden border lg:aspect-3/1">
 	<img src={data.meta.poster} alt={data.meta.title} class="size-full object-cover object-center" />
 	<div class="absolute top-0 left-0 grid h-full w-full place-items-center bg-[#080808]/80 transition-opacity duration-500 group-hover:opacity-0">
 		<h1 class="max-w-[80%] px-4 text-center text-2xl font-semibold uppercase lg:max-w-[60%] lg:text-4xl">
@@ -22,7 +22,7 @@
 	</p>
 	<div
 		aria-hidden="true"
-		class="absolute top-0 left-0 h-full w-full bg-repeat opacity-[2%] group-hover:opacity-0"
+		class="absolute top-0 left-0 h-full w-full bg-repeat opacity-2 group-hover:opacity-0"
 		style="background-image: url('https://framerusercontent.com/images/rR6HYXBrMmX4cRpXfXUOvpvpB0.png')"
 	></div>
 </header>
