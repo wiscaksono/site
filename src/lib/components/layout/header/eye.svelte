@@ -1,13 +1,14 @@
 <script lang="ts">
 	import { MediaQuery } from 'svelte/reactivity';
 
-	let pupilPos = $state({ x: 50, y: 50 });
-	let targetPos = $state({ x: 50, y: 50 });
+	let pupilPos = { x: 50, y: 50 };
+	let targetPos = { x: 50, y: 50 };
 
 	let canvasEl = $state<HTMLCanvasElement | null>(null);
-	let ctx = $state<CanvasRenderingContext2D | null>(null);
+	let ctx: CanvasRenderingContext2D | null = null;
 
-	let isMobile = $derived(new MediaQuery('(max-width: 1024px)').current);
+	const mobileQuery = new MediaQuery('(max-width: 1024px)');
+	let isMobile = $derived(mobileQuery.current);
 
 	let rafId: number | null = null;
 
@@ -85,7 +86,9 @@
 			targetPos = { x: Math.max(25, Math.min(75, targetX)), y: Math.max(25, Math.min(75, targetY)) };
 		};
 
-		const handleMouseLeave = () => (targetPos = { x: 50, y: 50 });
+		const handleMouseLeave = () => {
+			targetPos = { x: 50, y: 50 };
+		};
 
 		window.addEventListener('mousemove', handleMouseMove, { signal: controller.signal, passive: true });
 		document.addEventListener('mouseleave', handleMouseLeave, { signal: controller.signal });

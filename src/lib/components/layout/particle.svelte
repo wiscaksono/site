@@ -26,12 +26,12 @@
 
 	let { quantity = 500, size = 0.4, vx = 0, vy = 0 }: Props = $props();
 
-	let circles = $state<Circle[]>([]);
-	let rafID = $state<number | null>(null);
+	let circles: Circle[] = [];
+	let rafID: number | null = null;
 	let canvas = $state<HTMLCanvasElement | null>(null);
 	let canvasContainer = $state<HTMLDivElement | null>(null);
-	let context = $state<CanvasRenderingContext2D | null>(null);
-	let canvasSize = $state<{ w: number; h: number }>({ w: 0, h: 0 });
+	let context: CanvasRenderingContext2D | null = null;
+	let canvasSize = { w: 0, h: 0 };
 
 	const dpr = browser ? window.devicePixelRatio : 1;
 
