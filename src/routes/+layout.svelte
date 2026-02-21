@@ -81,10 +81,6 @@
 <div class="grid-pattern absolute top-0 left-0 h-full w-full" aria-hidden="true"></div>
 <div class="grain-noise pointer-events-none fixed top-0 size-[300%]" aria-hidden="true"></div>
 
-{#await import('$lib/components/layout/particle.svelte') then { default: Particle }}
-	<Particle />
-{/await}
-
 <style>
 	.grid-pattern {
 		background-image:
