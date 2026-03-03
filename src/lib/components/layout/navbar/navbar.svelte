@@ -1,5 +1,8 @@
 <script lang="ts">
 	import { page } from '$app/state';
+	import { onDestroy } from 'svelte';
+	import { createWebHaptics } from 'web-haptics/svelte';
+
 	import { navbarMenu } from './navbar-menu';
 	import NavbarListener from './navbar-listener.svelte';
 
@@ -26,6 +29,10 @@
 			after: title.substring(index + 1)
 		};
 	};
+
+	const { trigger, destroy } = createWebHaptics();
+
+	onDestroy(destroy);
 </script>
 
 <NavbarListener />
@@ -66,6 +73,7 @@
 				<li class="shrink-0">
 					<a
 						{href}
+						onclick={() => trigger()}
 						data-sveltekit-preload-code="eager"
 						data-sveltekit-preload-data
 						data-active={isOnCurrentPath}

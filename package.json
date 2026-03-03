@@ -48,7 +48,8 @@
 		"postgres": "^3.4.8",
 		"rehype-slug": "^6.0.0",
 		"remark-toc": "^9.0.0",
-		"shiki": "^3.22.0"
+		"shiki": "^3.22.0",
+		"web-haptics": "^0.0.6"
 	},
 	"pnpm": {
 		"onlyBuiltDependencies": [

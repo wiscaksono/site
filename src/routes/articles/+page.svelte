@@ -1,8 +1,15 @@
 <script lang="ts">
+	import { onDestroy } from 'svelte';
+	import { createWebHaptics } from 'web-haptics/svelte';
+
 	import Metadata from '$lib/components/metadata.svelte';
 	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();
+
+	const { trigger, destroy } = createWebHaptics();
+
+	onDestroy(destroy);
 </script>
 
 <Metadata
@@ -17,6 +24,7 @@
 		<div class="flex flex-col gap-y-2 border border-[#898989]/20 p-2 md:gap-y-2.5 lg:gap-y-5">
 			<h2 class="text-lg font-semibold text-[#C6C6C6] md:text-xl lg:text-2xl">
 				<a
+					onclick={() => trigger()}
 					href={`/articles/${article.slug}`}
 					aria-label={`View details for article: ${article.title}`}
 					data-umami-event="article-click"
@@ -31,6 +39,7 @@
 			<div class="flex flex-wrap items-center justify-between gap-2 text-sm">
 				<p>Published on {article.publishedDate}</p>
 				<a
+					onclick={() => trigger()}
 					href={`/articles/${article.slug.toLowerCase()}`}
 					class="flex items-center justify-center gap-2 gap-x-2 bg-[#898989] px-2.5 py-0.5 text-[#131313] select-none"
 					aria-label={`Read more about ${article.title}`}

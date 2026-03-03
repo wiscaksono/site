@@ -1,7 +1,14 @@
 <script lang="ts">
+	import { onDestroy } from 'svelte';
+	import { createWebHaptics } from 'web-haptics/svelte';
+
 	import Metadata from '$lib/components/metadata.svelte';
 
 	import { getGuestsBook, insertGuestBook, toggleLikeGuestBook, deleteGuestBook } from './data.remote';
+
+	const { trigger, destroy } = createWebHaptics();
+
+	onDestroy(destroy);
 </script>
 
 <Metadata
@@ -56,11 +63,16 @@
 				class="placeholder-opacity-50 placeholder:text-ash-400 caret-cyan flex-1 bg-transparent focus:border-transparent focus:ring-0 focus:outline-none"
 			/>
 			{#if user}
-				<button class="bg-ash-400 text-ash-800 flex w-full items-center justify-center gap-2 gap-x-2 px-2 py-0.5 lg:w-40" data-umami-event="guestbook-submit"
-					>Submit</button
+				<button
+					onclick={() => trigger()}
+					class="bg-ash-400 text-ash-800 flex w-full items-center justify-center gap-2 gap-x-2 px-2 py-0.5 lg:w-40"
+					data-umami-event="guestbook-submit"
 				>
+					Submit
+				</button>
 			{:else}
 				<a
+					onclick={() => trigger()}
 					class="bg-ash-400 text-ash-800 flex w-full items-center justify-center gap-2 gap-x-2 px-2 py-0.5 lg:w-40"
 					href="/api/auth"
 					data-umami-event="guestbook-signin"
@@ -90,7 +102,10 @@
 					{#if user && item.id > 0}
 						<div class="flex items-center justify-center gap-x-1">
 							<button
-								onclick={async () => await toggleLikeGuestBook(item.id)}
+								onclick={async () => {
+									trigger();
+									await toggleLikeGuestBook(item.id);
+								}}
 								class="flex items-center gap-x-1 opacity-100 transition-opacity group-hover:opacity-100 lg:opacity-0"
 								aria-label={item.liked ? 'Unlike' : 'Like'}
 								data-umami-event="guestbook-like"

@@ -1,6 +1,9 @@
 <script lang="ts">
 	import { page } from '$app/state';
+	import { onDestroy } from 'svelte';
 	import { browser } from '$app/environment';
+	import { createWebHaptics } from 'web-haptics/svelte';
+
 	import Metadata from '$lib/components/metadata.svelte';
 	import type { PageProps } from './$types';
 
@@ -11,6 +14,10 @@
 		if (activeTechstack === '') return data.items;
 		return data.items.filter((item) => item.techstack?.includes(activeTechstack));
 	});
+
+	const { trigger, destroy } = createWebHaptics();
+
+	onDestroy(destroy);
 </script>
 
 <Metadata
@@ -23,6 +30,7 @@
 <main class="grid flex-1 grow gap-2 overflow-y-auto md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
 	{#each articles as article, i (i)}
 		<a
+			onclick={() => trigger()}
 			href={`/projects/${article.slug}` + (activeTechstack ? `?techstack=${activeTechstack}` : '')}
 			class="divide-ash-700 border-ash-700 divide-y overflow-hidden border select-none"
 			aria-label={`View details for project: ${article.title}`}
