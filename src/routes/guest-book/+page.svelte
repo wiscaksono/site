@@ -61,42 +61,52 @@
 
 		<ul class="divide-ash-700 flex flex-col gap-y-1 divide-y text-sm lg:divide-y-0">
 			{#each data.guestBooks as item (item.id)}
+				{#snippet actions()}
+					<button
+						onclick={async () => {
+							trigger();
+							await toggleLikeGuestBook(item.id);
+						}}
+						class="flex items-center gap-x-1 opacity-100 transition-opacity group-hover:opacity-100 lg:opacity-0"
+						aria-label={item.liked ? 'Unlike' : 'Like'}
+					>
+						<span class="text-xs leading-none">
+							{item.likeCount}
+						</span>
+						<svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="stroke-ash-400" class:fill-ash-400={item.liked}>
+							<path
+								d="M11.0832 8.16667C11.9523 7.315 12.8332 6.29417 12.8332 4.95833C12.8332 4.10743 12.4952 3.29138 11.8935 2.6897C11.2918 2.08802 10.4757 1.75 9.62484 1.75C8.59817 1.75 7.87484 2.04167 6.99984 2.91667C6.12484 2.04167 5.4015 1.75 4.37484 1.75C3.52393 1.75 2.70788 2.08802 2.1062 2.6897C1.50452 3.29138 1.1665 4.10743 1.1665 4.95833C1.1665 6.3 2.0415 7.32083 2.9165 8.16667L6.99984 12.25L11.0832 8.16667Z"
+								stroke-width="1.5"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+							/>
+						</svg>
+					</button>
+					{#if item.userId === data.user?.id}
+						<button aria-label="Delete" class="flex items-center justify-center" onclick={async () => await deleteGuestBook(item.id)}>
+							<svg width="14" height="14" fill="none" viewBox="0 0 14 14">
+								<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.5 3.5l-7 7M3.5 3.5l7 7" />
+							</svg>
+						</button>
+					{/if}
+				{/snippet}
 				<li class="group flex flex-col gap-1 py-1 lg:flex-row lg:gap-2 lg:border-y-0 lg:py-0" class:animate-pulse={item.id < 0}>
-					<p class="flex-1 truncate lg:w-36 lg:flex-none">
-						<span class="text-cyan">~</span>/{item.username.toLowerCase().replace(/\s/g, '-')}
-					</p>
+					<div class="flex items-center justify-between gap-2 lg:contents">
+						<p class="min-w-0 flex-1 truncate lg:w-36 lg:flex-none">
+							<span class="text-cyan">~</span>/{item.username.toLowerCase().replace(/\s/g, '-')}
+						</p>
+						{#if data.user && item.id > 0}
+							<div class="flex shrink-0 items-center gap-x-1 lg:hidden">
+								{@render actions()}
+							</div>
+						{/if}
+					</div>
 					<p class="block lg:hidden">{item.content}</p>
 					<p class="hidden lg:block">:</p>
 					<p class="hidden flex-1 lg:block">{item.content}</p>
 					{#if data.user && item.id > 0}
-						<div class="flex items-center justify-center gap-x-1">
-							<button
-								onclick={async () => {
-									trigger();
-									await toggleLikeGuestBook(item.id);
-								}}
-								class="flex items-center gap-x-1 opacity-100 transition-opacity group-hover:opacity-100 lg:opacity-0"
-								aria-label={item.liked ? 'Unlike' : 'Like'}
-							>
-								<span class="text-xs leading-none">
-									{item.likeCount}
-								</span>
-								<svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="stroke-ash-400" class:fill-ash-400={item.liked}>
-									<path
-										d="M11.0832 8.16667C11.9523 7.315 12.8332 6.29417 12.8332 4.95833C12.8332 4.10743 12.4952 3.29138 11.8935 2.6897C11.2918 2.08802 10.4757 1.75 9.62484 1.75C8.59817 1.75 7.87484 2.04167 6.99984 2.91667C6.12484 2.04167 5.4015 1.75 4.37484 1.75C3.52393 1.75 2.70788 2.08802 2.1062 2.6897C1.50452 3.29138 1.1665 4.10743 1.1665 4.95833C1.1665 6.3 2.0415 7.32083 2.9165 8.16667L6.99984 12.25L11.0832 8.16667Z"
-										stroke-width="1.5"
-										stroke-linecap="round"
-										stroke-linejoin="round"
-									/>
-								</svg>
-							</button>
-							{#if item.userId === data.user.id}
-								<button aria-label="Delete" class="flex items-center justify-center" onclick={async () => await deleteGuestBook(item.id)}>
-									<svg width="14" height="14" fill="none" viewBox="0 0 14 14">
-										<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.5 3.5l-7 7M3.5 3.5l7 7" />
-									</svg>
-								</button>
-							{/if}
+						<div class="hidden shrink-0 items-center gap-x-1 lg:flex">
+							{@render actions()}
 						</div>
 					{/if}
 					<p class="hidden lg:block">

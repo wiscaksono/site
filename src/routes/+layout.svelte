@@ -66,7 +66,7 @@
 <main
 	bind:this={containerElement}
 	data-fullscreen={isFullscreen || isMobile}
-	class="from-ash-800 gradient-border gradient-border-from-ash-800 gradient-border-via-ash-700 gradient-border-to-ash-400 to-ash-700 z-10 flex h-dvh w-dvw flex-col overflow-hidden rounded-xl bg-linear-to-tr via-75% [--gradient-border-angle:45deg] data-[fullscreen=true]:rounded-none lg:h-[75dvh] lg:w-[70dvw]"
+	class="from-ash-800 lg:gradient-border gradient-border-from-ash-800 gradient-border-via-ash-700 gradient-border-to-ash-400 to-ash-700 z-10 flex h-dvh w-dvw flex-col overflow-hidden rounded-xl bg-linear-to-tr via-75% [--gradient-border-angle:45deg] data-[fullscreen=true]:rounded-none lg:h-[75dvh] lg:w-[70dvw]"
 	class:container-shadow={!isFullscreen || !isMobile}
 	style:transform="translate({position.x}px, {position.y}px)"
 	style:transition={dragging ? 'none' : 'all 0.2s ease-out'}
@@ -84,5 +84,5 @@
 	playsinline
 	preload="auto"
 	aria-hidden="true"
-	class="pointer-events-none fixed inset-0 z-999 h-full w-full object-cover object-top mix-blend-multiply grayscale motion-reduce:hidden"
+	class="pointer-events-none fixed inset-0 z-999 hidden h-full w-full object-cover object-top mix-blend-multiply grayscale motion-reduce:hidden lg:block"
 ></video>
