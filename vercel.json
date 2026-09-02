@@ -1,5 +1,6 @@
 {
 	"installCommand": "corepack pnpm install",
+	"buildCommand": "corepack pnpm run build",
 	"headers": [
 		{
 			"source": "/leaves.mp4",
