@@ -7,14 +7,15 @@
 	import Header from '$lib/components/layout/header/header.svelte';
 	import Navbar from '$lib/components/layout/navbar/navbar.svelte';
 
-	let { children } = $props();
+	let { data, children } = $props();
 
 	let dragging = $state(false);
 	let isFullscreen = $state(false);
 	let offset = $state({ x: 0, y: 0 });
 	let position = $state({ x: 0, y: 0 });
 	let containerElement = $state<HTMLElement | null>(null);
-	let isMobile = $derived(new MediaQuery('(max-width: 1024px)').current);
+	const mobileQuery = new MediaQuery('(max-width: 1024px)');
+	let isMobile = $derived(mobileQuery.current);
 
 	function toggleFullscreen() {
 		if (isMobile) return;
@@ -32,25 +33,17 @@
 		offset = { x: e.clientX - position.x, y: e.clientY - position.y };
 	}
 
-	$effect(() => {
-		const controller = new AbortController();
+	function handleMouseUp() {
+		dragging = false;
+	}
 
-		const handleMouseUp = () => (dragging = false);
+	function handleMouseMove(e: MouseEvent) {
+		if (dragging) position = { x: e.clientX - offset.x, y: e.clientY - offset.y };
+	}
 
-		const handleMouseMove = (e: MouseEvent) => {
-			if (dragging) position = { x: e.clientX - offset.x, y: e.clientY - offset.y };
-		};
-
-		const handleFullscreenChange = () => {
-			if (!document.fullscreenElement) isFullscreen = false;
-		};
-
-		window.addEventListener('mouseup', handleMouseUp, { signal: controller.signal });
-		window.addEventListener('mousemove', handleMouseMove, { signal: controller.signal });
-		document.addEventListener('fullscreenchange', handleFullscreenChange, { signal: controller.signal });
-
-		return () => controller.abort();
-	});
+	function handleFullscreenChange() {
+		if (!document.fullscreenElement) isFullscreen = false;
+	}
 
 	$effect(() => {
 		if (!isMobile) return;
@@ -59,7 +52,12 @@
 	});
 </script>
 
+<svelte:window onmouseup={handleMouseUp} onmousemove={handleMouseMove} />
+<svelte:document onfullscreenchange={handleFullscreenChange} />
+
 <svelte:head>
+	<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+	{@html data.siteSchemaHtml}
 	{#if !dev}
 		<script defer src="https://umami.wiscaksono.com/script.js" data-website-id={PUBLIC_UMAMI_TRACKING_ID}></script>
 	{/if}
@@ -68,7 +66,7 @@
 <main
 	bind:this={containerElement}
 	data-fullscreen={isFullscreen || isMobile}
-	class="from-ash-800 to-ash-700 z-10 flex h-dvh w-dvw flex-col overflow-hidden rounded-xl bg-linear-to-tr data-[fullscreen=true]:rounded-none lg:h-[75dvh] lg:w-[70dvw]"
+	class="from-ash-800 gradient-border gradient-border-from-ash-800 gradient-border-via-ash-700 gradient-border-to-ash-400 to-ash-700 z-10 flex h-dvh w-dvw flex-col overflow-hidden rounded-xl bg-linear-to-tr via-75% [--gradient-border-angle:45deg] data-[fullscreen=true]:rounded-none lg:h-[75dvh] lg:w-[70dvw]"
 	class:container-shadow={!isFullscreen || !isMobile}
 	style:transform="translate({position.x}px, {position.y}px)"
 	style:transition={dragging ? 'none' : 'all 0.2s ease-out'}
@@ -78,86 +76,13 @@
 	<Navbar />
 </main>
 
-<div class="grid-pattern absolute top-0 left-0 h-full w-full" aria-hidden="true"></div>
-<div class="grain-noise pointer-events-none fixed top-0 size-[300%]" aria-hidden="true"></div>
-
-<style>
-	.grid-pattern {
-		background-image:
-			linear-gradient(to right, var(--color-ash-500) 2px, transparent 2px), linear-gradient(to bottom, var(--color-ash-500) 2px, transparent 2px);
-		background-size: 5vh 5vh;
-		background-position: center;
-		opacity: 0.2;
-	}
-
-	.grain-noise {
-		background-image: url('/grain.webp');
-		animation: animate-grain 8s steps(10) infinite;
-		opacity: 0.05;
-	}
-
-	.container-shadow {
-		animation: animate-wave-shadow 8s ease-in-out infinite;
-	}
-
-	@keyframes animate-wave-shadow {
-		0%,
-		100% {
-			box-shadow:
-				0px 0px 0px 1px rgba(165, 165, 165, 0.04),
-				-9px 9px 9px -0.5px rgba(0, 0, 0, 0.04),
-				-18px 18px 18px -1.5px rgba(0, 0, 0, 0.08),
-				-37px 37px 37px -3px rgba(0, 0, 0, 0.16),
-				-75px 75px 75px -6px rgba(0, 0, 0, 0.24),
-				-150px 150px 150px -12px rgba(0, 0, 0, 0.48);
-		}
-		25% {
-			box-shadow:
-				0px 0px 0px 1px rgba(165, 165, 165, 0.04),
-				-7px 11px 9px -0.5px rgba(0, 0, 0, 0.04),
-				-14px 22px 18px -1.5px rgba(0, 0, 0, 0.08),
-				-29px 45px 37px -3px rgba(0, 0, 0, 0.16),
-				-59px 91px 75px -6px rgba(0, 0, 0, 0.24),
-				-118px 182px 150px -12px rgba(0, 0, 0, 0.48);
-		}
-		50% {
-			box-shadow:
-				0px 0px 0px 1px rgba(165, 165, 165, 0.04),
-				-9px 9px 9px -0.5px rgba(0, 0, 0, 0.04),
-				-18px 18px 18px -1.5px rgba(0, 0, 0, 0.08),
-				-37px 37px 37px -3px rgba(0, 0, 0, 0.16),
-				-75px 75px 75px -6px rgba(0, 0, 0, 0.24),
-				-150px 150px 150px -12px rgba(0, 0, 0, 0.48);
-		}
-		75% {
-			box-shadow:
-				0px 0px 0px 1px rgba(165, 165, 165, 0.04),
-				-11px 7px 9px -0.5px rgba(0, 0, 0, 0.04),
-				-22px 14px 18px -1.5px rgba(0, 0, 0, 0.08),
-				-45px 29px 37px -3px rgba(0, 0, 0, 0.16),
-				-91px 59px 75px -6px rgba(0, 0, 0, 0.24),
-				-182px 118px 150px -12px rgba(0, 0, 0, 0.48);
-		}
-	}
-
-	@keyframes animate-grain {
-		0%,
-		100% {
-			transform: translate(0);
-		}
-		10%,
-		30%,
-		50%,
-		70%,
-		90% {
-			transform: translate(-5%, -10%);
-		}
-		20%,
-		40%,
-		60%,
-		80%,
-		100% {
-			transform: translate(-15%, -20%);
-		}
-	}
-</style>
+<video
+	src="/leaves.mp4"
+	autoplay
+	loop
+	muted
+	playsinline
+	preload="auto"
+	aria-hidden="true"
+	class="pointer-events-none fixed inset-0 z-999 h-full w-full object-cover object-top mix-blend-multiply grayscale motion-reduce:hidden"
+></video>

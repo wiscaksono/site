@@ -9,6 +9,8 @@
 	const { trigger, destroy } = createWebHaptics();
 
 	onDestroy(destroy);
+
+	let data = $derived(await getGuestsBook());
 </script>
 
 <Metadata
@@ -18,35 +20,11 @@
 
 <h1 class="sr-only">Wisnu Wicaksono's Guest Book</h1>
 
-<section class="flex-1 grow space-y-1 overflow-y-auto px-3 lg:px-4">
-	{#await getGuestsBook()}
-		<div class="grid h-full w-full place-items-center">
-			<svg
-				xmlns="http://www.w3.org/2000/svg"
-				width="24"
-				height="24"
-				viewBox="0 0 24 24"
-				fill="none"
-				stroke="currentColor"
-				stroke-width="2"
-				stroke-linecap="round"
-				stroke-linejoin="round"
-				class="animate-spin"
-			>
-				<path d="M12 2v4" />
-				<path d="m16.2 7.8 2.9-2.9" />
-				<path d="M18 12h4" />
-				<path d="m16.2 16.2 2.9 2.9" />
-				<path d="M12 18v4" />
-				<path d="m4.9 19.1 2.9-2.9" />
-				<path d="M2 12h4" />
-				<path d="m4.9 4.9 2.9 2.9" />
-			</svg>
-		</div>
-	{:then { guestBooks, user }}
+<section class="flex-1 grow space-y-1 overflow-y-auto overscroll-y-contain px-3 lg:px-4">
+	{#if data}
 		<form class="flex flex-col gap-2 text-sm lg:flex-row lg:items-center" {...insertGuestBook}>
 			<p class="truncate lg:w-36">
-				<span class="text-cyan">~</span>/{user ? user?.username?.toLowerCase().replace(/\s/g, '-') : 'guest'}
+				<span class="text-cyan">~</span>/{data.user ? data.user?.username?.toLowerCase().replace(/\s/g, '-') : 'guest'}
 			</p>
 			<p class="hidden lg:block">:</p>
 			<!-- svelte-ignore a11y_autofocus -->
@@ -58,11 +36,11 @@
 				name="content"
 				maxLength={140}
 				autoComplete="off"
-				disabled={!user}
-				placeholder={user ? 'Leave a message' : 'Sign in to leave a message'}
+				disabled={!data.user}
+				placeholder={data.user ? 'Leave a message' : 'Sign in to leave a message'}
 				class="placeholder-opacity-50 placeholder:text-ash-400 caret-cyan flex-1 bg-transparent focus:border-transparent focus:ring-0 focus:outline-none"
 			/>
-			{#if user}
+			{#if data.user}
 				<button
 					onclick={() => trigger()}
 					class="bg-ash-400 text-ash-800 flex w-full items-center justify-center gap-2 gap-x-2 px-2 py-0.5 lg:w-40"
@@ -91,7 +69,7 @@
 		</form>
 
 		<ul class="divide-ash-700 flex flex-col gap-y-1 divide-y text-sm lg:divide-y-0">
-			{#each guestBooks as item (item.id)}
+			{#each data.guestBooks as item (item.id)}
 				<li class="group flex flex-col gap-1 py-1 lg:flex-row lg:gap-2 lg:border-y-0 lg:py-0" class:animate-pulse={item.id < 0}>
 					<p class="flex-1 truncate lg:w-36 lg:flex-none">
 						<span class="text-cyan">~</span>/{item.username.toLowerCase().replace(/\s/g, '-')}
@@ -99,7 +77,7 @@
 					<p class="block lg:hidden">{item.content}</p>
 					<p class="hidden lg:block">:</p>
 					<p class="hidden flex-1 lg:block">{item.content}</p>
-					{#if user && item.id > 0}
+					{#if data.user && item.id > 0}
 						<div class="flex items-center justify-center gap-x-1">
 							<button
 								onclick={async () => {
@@ -123,7 +101,7 @@
 									/>
 								</svg>
 							</button>
-							{#if item.userId === user.id}
+							{#if item.userId === data.user.id}
 								<button
 									aria-label="Delete"
 									class="flex items-center justify-center"
@@ -146,5 +124,29 @@
 				</li>
 			{/each}
 		</ul>
-	{/await}
+	{:else}
+		<div class="grid h-full w-full place-items-center">
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				width="24"
+				height="24"
+				viewBox="0 0 24 24"
+				fill="none"
+				stroke="currentColor"
+				stroke-width="2"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+				class="animate-spin"
+			>
+				<path d="M12 2v4" />
+				<path d="m16.2 7.8 2.9-2.9" />
+				<path d="M18 12h4" />
+				<path d="m16.2 16.2 2.9 2.9" />
+				<path d="M12 18v4" />
+				<path d="m4.9 19.1 2.9-2.9" />
+				<path d="M2 12h4" />
+				<path d="m4.9 4.9 2.9 2.9" />
+			</svg>
+		</div>
+	{/if}
 </section>

@@ -1,8 +1,7 @@
-import { github } from '$lib/server/oauth';
+import { constantTimeEqual, validateGitHubCode } from '$lib/server/oauth';
 import { createUser, getUserFromGitHubId } from '$lib/server/db/user';
 import { createSession, generateSessionToken, setSessionTokenCookie } from '$lib/server/db/session';
 
-import type { OAuth2Tokens } from 'arctic';
 import type { RequestEvent } from './$types';
 
 const GITHUB_USER_API_URL = 'https://api.github.com/user';
@@ -14,19 +13,18 @@ export async function GET(event: RequestEvent): Promise<Response> {
 
 	// 1. Validate state and code
 	if (!storedState || !code || !state) return createErrorResponse('Invalid request parameters.');
-	if (storedState !== state) return createErrorResponse('Invalid state parameter.');
+	if (!constantTimeEqual(storedState, state)) return createErrorResponse('Invalid state parameter.');
 
 	// 2. Validate authorization code with GitHub
-	let tokens: OAuth2Tokens;
+	let githubAccessToken: string;
 
 	try {
-		tokens = await github.validateAuthorizationCode(code);
+		const result = await validateGitHubCode(code);
+		githubAccessToken = result.accessToken;
 	} catch (e) {
 		console.error('Failed to validate GitHub authorization code:', e);
 		return createErrorResponse('Failed to validate authorization code.');
 	}
-
-	const githubAccessToken = tokens.accessToken();
 
 	// 3. Fetch GitHub user data
 	const githubUserData = await fetchGitHubApi<{ id: number; login: string }>(GITHUB_USER_API_URL, githubAccessToken);

@@ -1,3 +1,4 @@
+import { createHash, randomBytes } from 'node:crypto';
 import { eq } from 'drizzle-orm';
 
 import { db } from './';
@@ -13,7 +14,7 @@ const BASE32_ALPHABET = 'abcdefghijklmnopqrstuvwxyz234567';
  * Validates a session token.
  */
 export async function validateSessionToken(token: string) {
-	const sessionId = await sha256Hex(new TextEncoder().encode(token));
+	const sessionId = sha256Hex(new TextEncoder().encode(token));
 
 	return await db.transaction(async (tx) => {
 		const [session] = await tx.select().from(table.session).where(eq(table.session.id, sessionId));
@@ -70,8 +71,7 @@ export function deleteSessionTokenCookie(event: RequestEvent): void {
  * Generates a new session token.
  */
 export function generateSessionToken(): string {
-	const tokenBytes = new Uint8Array(20);
-	crypto.getRandomValues(tokenBytes);
+	const tokenBytes = randomBytes(20);
 	const token = encodeBase32(tokenBytes).toLowerCase();
 	return token;
 }
@@ -80,7 +80,7 @@ export function generateSessionToken(): string {
  * Creates a new session.
  */
 export async function createSession(token: string, userId: number) {
-	const sessionId = await sha256Hex(new TextEncoder().encode(token));
+	const sessionId = sha256Hex(new TextEncoder().encode(token));
 	const [session] = await db
 		.insert(table.session)
 		.values({ id: sessionId, userId, expiresAt: new Date(Date.now() + EXPIRATION_TIME) })
@@ -88,11 +88,8 @@ export async function createSession(token: string, userId: number) {
 	return session;
 }
 
-async function sha256Hex(input: Uint8Array) {
-	const hashBuffer = await crypto.subtle.digest('SHA-256', input);
-	return Array.from(new Uint8Array(hashBuffer))
-		.map((b) => b.toString(16).padStart(2, '0'))
-		.join('');
+function sha256Hex(input: Uint8Array) {
+	return createHash('sha256').update(input).digest('hex');
 }
 
 function encodeBase32(bytes: Uint8Array): string {

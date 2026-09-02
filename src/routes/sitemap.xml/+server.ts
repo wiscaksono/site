@@ -22,10 +22,7 @@ function generateUrlData(globResult: Record<string, unknown>, prefix: string) {
 			let changefreq = 'monthly';
 			let priority: number = 0.7;
 
-			if (prefix === '/articles') {
-				changefreq = 'weekly';
-				priority = 0.8;
-			} else if (prefix === '/projects') {
+			if (prefix === '/projects') {
 				changefreq = 'monthly';
 				priority = 0.6;
 			} else if (prefix === '/abouts') {
@@ -53,8 +50,7 @@ function escapeXml(unsafe: string): string {
 }
 
 export const GET: RequestHandler = async () => {
-	const [articleUrlData, projectUrlData, aboutUrlData] = await Promise.all([
-		generateUrlData(import.meta.glob('/src/contents/articles/*.md'), '/articles'),
+	const [projectUrlData, aboutUrlData] = await Promise.all([
 		generateUrlData(import.meta.glob('/src/contents/projects/*.md'), '/projects'),
 		generateUrlData(import.meta.glob('/src/contents/abouts/*.md'), '/abouts')
 	]);
@@ -78,13 +74,6 @@ export const GET: RequestHandler = async () => {
 			priority: 1.0,
 			lastmod: new Date().toISOString()
 		},
-		{
-			loc: `${BASE_URL}/articles`,
-			changefreq: 'monthly',
-			priority: 1.0,
-			lastmod: new Date().toISOString()
-		},
-		...articleUrlData,
 		...projectUrlData,
 		...aboutUrlData
 	];

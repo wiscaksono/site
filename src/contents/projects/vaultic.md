@@ -1,7 +1,7 @@
 ---
 title: Vaultic Web
 description: Cloud storage that uses Telegram as the backend. Upload, preview, and share files through a web interface. Telegram stores everything.
-poster: /projects/vaultic.png
+poster: $lib/assets/projects/vaultic.png
 techstack:
   - SvelteKit
 ---

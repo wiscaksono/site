@@ -17,11 +17,6 @@ const hardware = {
 			tags: ['Keyboard']
 		},
 		{
-			name: 'Noir Z1',
-			desc: 'My compact 65% layout keyboard',
-			tags: ['Keyboard']
-		},
-		{
 			name: 'Logitech MX Master 3S',
 			desc: 'The all-rounder mouse I use for everything... except pwning noobs in games. 😅',
 			tags: ['Mouse']
@@ -36,14 +31,14 @@ const hardware = {
 	],
 	audio: [
 		{
+			name: 'AirPods Pro 3',
+			desc: 'My everyday buds for music, calls, and shutting out noise — insane ANC, buttery Transparency, and that effortless Apple connect.',
+			tags: ['Earbuds']
+		},
+		{
 			name: 'Steelseries Arctis 7',
 			desc: 'A comfy wireless headset with awesome sound. No more cable tangles, and the chat mix feature is a total game-changer!',
 			tags: ['Headphone']
-		},
-		{
-			name: 'Redmi Buds 3 Pro',
-			desc: 'The multitasker of my audio gear – noise canceling, dual Bluetooth connections, and perfect for on-the-go jams.',
-			tags: ['Earbuds']
 		}
 	]
 };
@@ -75,6 +70,11 @@ const hosting = [
 	{
 		name: 'Vercel',
 		desc: "Deploys so fast, it's practically magic! Git push, and voilà – my website is live.",
+		tags: ['Hosting']
+	},
+	{
+		name: 'Coolify',
+		desc: 'The brain of my homeserver, self-hosted PaaS that makes deploying side projects from the homelab feel like Vercel, but on my own hardware.',
 		tags: ['Hosting']
 	}
 ];

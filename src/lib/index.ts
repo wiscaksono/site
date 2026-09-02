@@ -5,22 +5,19 @@
  * extracts their filenames as slugs, and returns an array of route parameter objects.
  *
  * @param contentType - The type of content to generate entries for.
- * Must be one of `'abouts'`, `'articles'`, or `'projects'`.
+ * Must be one of `'abouts'` or `'projects'`.
  *
  * @returns An array of objects in the form `{ slug: string }`,
  * where each slug is derived from a markdown file name.
  */
-export function generateEntries(contentType: 'abouts' | 'articles' | 'projects') {
-	let data = null;
+export function generateEntries(contentType: 'abouts' | 'projects') {
+	let data: string[];
 
 	// import.meta.glob() does not work with variables
 	// See: https://github.com/vitejs/vite/issues/5478
 	switch (contentType) {
 		case 'abouts':
 			data = Object.keys(import.meta.glob('/src/contents/abouts/*.md', { eager: true }));
-			break;
-		case 'articles':
-			data = Object.keys(import.meta.glob('/src/contents/articles/*.md', { eager: true }));
 			break;
 		case 'projects':
 			data = Object.keys(import.meta.glob('/src/contents/projects/*.md', { eager: true }));

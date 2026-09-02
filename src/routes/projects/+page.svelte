@@ -27,8 +27,8 @@
 
 <h1 class="sr-only">Wisnu Wicaksono's Projects</h1>
 
-<main class="grid flex-1 grow gap-2 overflow-y-auto md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-	{#each articles as article, i (i)}
+<main class="grid gap-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+	{#each articles as article (article.slug)}
 		<a
 			onclick={() => trigger()}
 			href={`/projects/${article.slug}` + (activeTechstack ? `?techstack=${activeTechstack}` : '')}
@@ -40,20 +40,16 @@
 			data-umami-event-techstack={activeTechstack || 'all'}
 		>
 			<figure class="group relative aspect-video">
-				<img
+				<enhanced:img
 					src={article.poster}
 					alt={article.title}
+					sizes="(min-width: 1280px) 25vw, (min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
 					class="aspect-video object-cover object-center grayscale-50 transition-all duration-500 group-hover:grayscale-0"
-					loading="lazy"
 				/>
 				<div class="absolute top-0 left-0 grid h-full w-full place-items-center bg-[#080808]/90 transition-opacity duration-500 group-hover:opacity-0">
 					<p class="px-4 text-center text-3xl font-semibold uppercase">{article.title}</p>
 				</div>
-				<div
-					aria-hidden="true"
-					class="absolute top-0 left-0 h-full w-full bg-repeat opacity-2 group-hover:opacity-0"
-					style="background-image: url('https://framerusercontent.com/images/rR6HYXBrMmX4cRpXfXUOvpvpB0.png')"
-				></div>
+				<div aria-hidden="true" class="bg-project-noise absolute top-0 left-0 h-full w-full bg-repeat opacity-2 group-hover:opacity-0"></div>
 			</figure>
 			<div class="p-2">
 				<p class="line-clamp-4 text-sm">{article.description}</p>

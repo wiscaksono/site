@@ -51,11 +51,11 @@ const config = {
 	kit: { adapter: adapter(), experimental: { remoteFunctions: true } },
 	compilerOptions: { experimental: { async: true } },
 	vitePlugin: {
-		inspector: {
-			toggleKeyCombo: 'meta-shift',
-			showToggleButton: 'always',
-			toggleButtonPos: 'bottom-right'
-		}
+		// inspector: {
+		// 	toggleKeyCombo: 'meta-shift',
+		// 	showToggleButton: 'always',
+		// 	toggleButtonPos: 'bottom-right'
+		// }
 	}
 };
 

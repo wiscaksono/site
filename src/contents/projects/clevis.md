@@ -1,7 +1,7 @@
 ---
 title: Clevis
 description: Clevis is a cutting-edge mobile application powered by React Native and enriched with the sleek design of Tailwind CSS. It revolutionizes everyday chores such as laundry and car repairs by providing a seamless and user-friendly experience. Users can easily order and schedule laundry services, select from a variety of options, and track their laundry in real-time. Additionally, Clevis allows users to request car repairs and connect with expert mechanics who come to their location for hassle-free service. The app offers live updates, transparency in service, a user-friendly interface, and customization options, making it a convenient solution for essential tasks.
-poster: /projects/clevis.webp
+poster: $lib/assets/projects/clevis.webp
 techstack:
   - React Native
 ---

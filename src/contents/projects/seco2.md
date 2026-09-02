@@ -1,7 +1,7 @@
 ---
 title: Seco2
 description: Seco2 is a carbon footprint calculator tailored for film and audiovisual productions. Employing a technology stack that includes React, Next.js, Redux, and Tailwind CSS, Seco2 has received official recognition from the CNC (Centre National du Cinéma et de l'Image Animée), the French national agency for cinema and the moving image.
-poster: /projects/seco2.webp
+poster: $lib/assets/projects/seco2.webp
 techstack:
   - React
 ---

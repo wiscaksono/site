@@ -1,7 +1,7 @@
 ---
 title: BigFriend
 description: Embark on a journey with BigFriend, a collaborative community of communication agencies and consulting firms committed to providing invaluable advice and support to businesses and individuals alike. Constructed with React, Next.js, Tailwind CSS, and Redux, the BigFriend website serves as an insightful hub, showcasing a spectrum of services. Explore their informative blog, delving into articles covering diverse topics in communication and marketing.
-poster: /projects/bigfriend.webp
+poster: $lib/assets/projects/bigfriend.webp
 technology:
   - React
 ---

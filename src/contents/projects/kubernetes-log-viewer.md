@@ -1,7 +1,7 @@
 ---
 title: Kubernetes Log Viewer
 description: The Kubernetes Log Viewer is an internal tool that simplifies log access from containers running in Kubernetes clusters. Replacing the need for SSH and CLI commands, this web-based interface, developed using Solid.js, Go, and Fiber, offers an intuitive and efficient way for team members to monitor and debug applications. The tool securely integrates with Kubernetes APIs, providing real-time log streaming and navigation through namespaces, pods, and containers
-poster: /projects/kubernetes-log-viewer.webp
+poster: $lib/assets/projects/kubernetes-log-viewer.webp
 techstack:
   - Go
 ---

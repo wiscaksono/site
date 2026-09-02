@@ -1,7 +1,7 @@
 ---
 title: 'Electron'
 description: "Electron is a data-driven platform that harnesses information from diverse sources, including satellites, ground sensors, and weather models, to provide valuable insights into various environmental indicators such as carbon emissions, deforestation, and air quality. Leveraging a technology stack that includes React, Zustand, Tailwind CSS, and Mapbox GL, Electron's platform caters to a wide spectrum of users, including governments, businesses, and NGOs."
-poster: /projects/electron.webp
+poster: $lib/assets/projects/electron.webp
 techstack:
   - React
 ---

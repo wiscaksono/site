@@ -17,9 +17,9 @@
 	onDestroy(destroy);
 </script>
 
-<main class="flex-1 grow overflow-y-auto px-3 lg:px-4">
-	<nav class="bg-ash-700 sticky top-0 z-50 mb-2 flex items-center overflow-x-auto select-none">
-		{#each data.techstacks as item, i (i)}
+<div class="flex min-h-0 flex-1 flex-col px-3 lg:px-4">
+	<nav class="bg-ash-700 sticky top-0 z-50 mb-2 flex shrink-0 items-center overflow-x-auto overscroll-x-contain select-none">
+		{#each data.techstacks as item (item)}
 			<a
 				onclick={() => trigger()}
 				href={item === 'All Projects' ? '/projects' : `/projects?techstack=${item}`}
@@ -35,5 +35,7 @@
 			</a>
 		{/each}
 	</nav>
-	{@render children()}
-</main>
+	<div class="min-h-0 flex-1 overflow-y-auto overscroll-y-contain">
+		{@render children()}
+	</div>
+</div>
