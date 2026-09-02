@@ -20,15 +20,8 @@
 	class={`group relative hidden cursor-default items-center overflow-hidden px-4 py-2.5 lg:flex ${isFullscreen ? 'lg:cursor-pointer' : 'lg:cursor-grab lg:active:cursor-grabbing'}`}
 	onmousedown={onMouseDown}
 	onkeydown={handleHeaderKeyDown}
-	data-umami-event-ondblclick="window-dblclick"
 >
-	<button
-		class="grid h-6 w-6 place-items-center rounded-full"
-		onclick={() => window.close()}
-		aria-label="Close"
-		data-umami-event="window-control"
-		data-umami-event-action="close"
-	>
+	<button class="grid h-6 w-6 place-items-center rounded-full" onclick={() => window.close()} aria-label="Close">
 		<div class="grid size-3.5 place-items-center rounded-full bg-[#898989] transition-colors group-hover:bg-[#FF6057]">
 			<svg
 				width="124"
@@ -44,7 +37,7 @@
 			</svg>
 		</div>
 	</button>
-	<button class="grid h-6 w-6 place-items-center rounded-full" aria-label="Minimize" data-umami-event="window-control" data-umami-event-action="minimize">
+	<button class="grid h-6 w-6 place-items-center rounded-full" aria-label="Minimize">
 		<div class="grid size-3.5 place-items-center rounded-full bg-[#898989] transition-colors group-hover:bg-[#FEBC2D]">
 			<svg
 				width="87"
@@ -59,13 +52,7 @@
 			</svg>
 		</div>
 	</button>
-	<button
-		class="grid h-6 w-6 place-items-center rounded-full"
-		onclick={toggleFullscreen}
-		aria-label={isFullscreen ? 'Exit Fullscreen' : 'Enter Fullscreen'}
-		data-umami-event="window-control"
-		data-umami-event-action={isFullscreen ? 'exit-fullscreen' : 'enter-fullscreen'}
-	>
+	<button class="grid h-6 w-6 place-items-center rounded-full" onclick={toggleFullscreen} aria-label={isFullscreen ? 'Exit Fullscreen' : 'Enter Fullscreen'}>
 		<div class="grid size-3.5 place-items-center rounded-full bg-[#898989] transition-colors group-hover:bg-[#2BC840]">
 			<svg
 				width="143"

@@ -23,8 +23,6 @@
 				href={resolve('/abouts/[slug]', { slug: post.slug })}
 				class="text-ash-300 data-[active=true]:bg-ash-300 data-[active=true]:text-ash-800 flex shrink-0 items-center gap-1.5 px-3 py-0.5 leading-none transition-all"
 				data-active={page.params.slug === post.slug}
-				data-umami-event="about-tab"
-				data-umami-event-section={post.slug}
 			>
 				<Icon name={post.title.split('.').pop() ?? ''} />
 				{post.title}

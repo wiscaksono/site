@@ -39,7 +39,7 @@
 
 <nav class="overflow-x-auto overscroll-x-contain text-sm select-none md:text-base lg:px-4 lg:pt-2 lg:pb-2.5">
 	<div class="hidden items-center justify-between gap-2 px-2 lg:flex lg:px-0">
-		<a class="flex items-center gap-0.5" href="https://github.com/wiscaksono/site" target="_blank" rel="norreferrer" data-umami-event="github-repo-link">
+		<a class="flex items-center gap-0.5" href="https://github.com/wiscaksono/site" target="_blank" rel="norreferrer">
 			<svg
 				class="mr-1 h-3 w-3"
 				xmlns="http://www.w3.org/2000/svg"
@@ -84,14 +84,7 @@
 			{/each}
 		</ul>
 		<div class="not-sr-only hidden items-center gap-2 lg:flex">
-			<a
-				class="bg-ash-300 shrink-0 px-2 py-0.5 leading-none text-black"
-				href="https://github.com/wiscaksono"
-				target="_blank"
-				rel="noreferrer"
-				data-umami-event="social-link"
-				data-umami-event-platform="github">Wiscaksono</a
-			>
+			<a class="bg-ash-300 shrink-0 px-2 py-0.5 leading-none text-black" href="https://github.com/wiscaksono" target="_blank" rel="noreferrer"> Wiscaksono </a>
 		</div>
 	</div>
 </nav>
