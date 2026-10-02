@@ -1,7 +1,7 @@
 ---
 title: FKM Mobilite
 description: Explore the digital gateway to FKM Mobilité, a compassionate transportation company specializing in services for individuals with disabilities. Founded by Nadia Aftis and Bentaleb Khelil, parents who intimately understand the challenges of accessible transportation, FKM Mobilité is dedicated to ensuring safe, comfortable, and reliable transportation for all. Their mission is to facilitate the participation of people with disabilities in every aspect of life.
-poster: $lib/assets/projects/fkm-mobilite.webp
+poster: '#lib/assets/projects/fkm-mobilite.webp'
 techstack:
   - Next
 ---

@@ -2,8 +2,8 @@ import { fail } from '@sveltejs/kit';
 import { desc, eq, sql, count, and } from 'drizzle-orm';
 import { command, form, getRequestEvent, query } from '$app/server';
 
-import { db } from '$lib/server/db';
-import * as table from '$lib/server/db/schema';
+import { db } from '#lib/server/db/index.js';
+import * as table from '#lib/server/db/schema.js';
 
 const getGuestBooksPrepared = db
 	.select({

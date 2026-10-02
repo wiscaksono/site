@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { page } from '$app/state';
 	import { onDestroy } from 'svelte';
-	import { browser } from '$app/environment';
+	import { browser } from '$app/env';
 	import { createWebHaptics } from 'web-haptics/svelte';
 
-	import Metadata from '$lib/components/metadata.svelte';
+	import Metadata from '#lib/components/metadata.svelte';
 	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();
@@ -42,7 +42,8 @@
 					alt={article.title}
 					sizes="(min-width: 1280px) 25vw, (min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
 					class="aspect-video object-cover object-center grayscale-50 transition-all duration-500 group-hover:grayscale-0"
-				/>
+				></enhanced:img>
+
 				<div class="absolute top-0 left-0 grid h-full w-full place-items-center bg-[#080808]/90 transition-opacity duration-500 group-hover:opacity-0">
 					<p class="px-4 text-center text-3xl font-semibold uppercase">{article.title}</p>
 				</div>

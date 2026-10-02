@@ -4,7 +4,7 @@
 	import { resolve } from '$app/paths';
 	import { createWebHaptics } from 'web-haptics/svelte';
 
-	import Icon from '$lib/components/icon.svelte';
+	import Icon from '#lib/components/icon.svelte';
 
 	import type { LayoutProps } from './$types';
 

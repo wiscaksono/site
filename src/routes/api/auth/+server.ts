@@ -1,4 +1,4 @@
-import { createGitHubAuthorizationURL, generateState } from '$lib/server/oauth';
+import { createGitHubAuthorizationURL, generateState } from '#lib/server/oauth.js';
 
 import type { RequestEvent } from './$types';
 

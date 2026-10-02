@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { resolve } from '$app/paths';
 	import { goto } from '$app/navigation';
 
 	import { navbarMenu } from './navbar-menu';
@@ -10,7 +9,7 @@
 		if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable) return;
 
 		const menuItem = navbarMenu.find((item) => item.key === e.key.toLowerCase());
-		if (menuItem) goto(resolve(menuItem.href));
+		if (menuItem) goto(menuItem.href);
 	};
 </script>
 

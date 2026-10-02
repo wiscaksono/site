@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { BASE_URL } from '$env/static/private';
+import { BASE_URL } from '$app/env/private';
 import type { RequestHandler } from './$types';
 
 function generateUrlData(globResult: Record<string, unknown>, prefix: string) {

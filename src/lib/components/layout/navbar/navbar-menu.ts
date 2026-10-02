@@ -1,8 +1,8 @@
-import type { Pathname } from '$app/types';
+import type { ResolvedPathname } from '$app/types';
 
 interface Menu {
 	title: string;
-	href: Pathname;
+	href: ResolvedPathname;
 	key: string;
 }
 

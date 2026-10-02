@@ -1,6 +1,6 @@
-import { constantTimeEqual, validateGitHubCode } from '$lib/server/oauth';
-import { createUser, getUserFromGitHubId } from '$lib/server/db/user';
-import { createSession, generateSessionToken, setSessionTokenCookie } from '$lib/server/db/session';
+import { constantTimeEqual, validateGitHubCode } from '#lib/server/oauth.js';
+import { createUser, getUserFromGitHubId } from '#lib/server/db/user.js';
+import { createSession, generateSessionToken, setSessionTokenCookie } from '#lib/server/db/session.js';
 
 import type { RequestEvent } from './$types';
 

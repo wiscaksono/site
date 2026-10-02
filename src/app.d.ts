@@ -1,6 +1,6 @@
 // See https://kit.svelte.dev/docs/types#app
 // for information about these interfaces
-import type { User, Session } from '$lib/server/db/schema';
+import type { User, Session } from '#lib/server/db/schema.js';
 
 declare global {
 	namespace App {

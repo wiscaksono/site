@@ -1,7 +1,7 @@
 ---
 title: PracSuite
 description: PracSuite is a cloud-based practice management software designed for healthcare professionals. Built using Next.js, Tailwind CSS, and GSAP, this comprehensive software offers a wide range of features to streamline healthcare practices. It includes appointment booking, clinical notes, patient record management, online forms, and invoicing capabilities. PracSuite aims to enhance the efficiency and productivity of healthcare professionals while providing an improved experience for their patients.
-poster: $lib/assets/projects/pracsuite.webp
+poster: '#lib/assets/projects/pracsuite.webp'
 techstack:
   - Next
 ---

@@ -1,4 +1,4 @@
-import type { About } from '$lib/types';
+import type { About } from '#lib/types.js';
 import type { LayoutServerLoad } from './$types';
 
 export const load: LayoutServerLoad = async ({ setHeaders }) => {

@@ -1,7 +1,7 @@
 ---
 title: Meteory
 description: Meteory is an environmental monitoring platform utilizing advanced satellite technology to provide decision-makers with precise data and insights for actions towards carbon neutrality.
-poster: $lib/assets/projects/meteory.webp
+poster: '#lib/assets/projects/meteory.webp'
 techstack:
   - React
 ---

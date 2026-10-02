@@ -1,5 +1,5 @@
-import { BASE_URL } from '$env/static/private';
-import { buildSiteSchema } from '$lib/schema';
+import { BASE_URL } from '$app/env/private';
+import { buildSiteSchema } from '#lib/schema.js';
 import type { LayoutServerLoad } from './$types';
 
 export const prerender = true;

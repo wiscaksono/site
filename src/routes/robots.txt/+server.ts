@@ -1,4 +1,4 @@
-import { BASE_URL } from '$env/static/private';
+import { BASE_URL } from '$app/env/private';
 import type { RequestHandler } from './$types';
 
 export const GET: RequestHandler = async () => {

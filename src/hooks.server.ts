@@ -1,7 +1,6 @@
-import { sequence } from '@sveltejs/kit/hooks';
-import { validateSessionToken, setSessionTokenCookie, deleteSessionTokenCookie } from '$lib/server/db/session';
+import { sequence, type Handle } from '@sveltejs/kit/hooks';
 
-import type { Handle } from '@sveltejs/kit';
+import { validateSessionToken, setSessionTokenCookie, deleteSessionTokenCookie } from '#lib/server/db/session.js';
 
 const preloadHandle: Handle = async ({ event, resolve }) => {
 	const fonts = ['commit-mono-latin-400-normal'];

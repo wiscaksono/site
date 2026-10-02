@@ -1,4 +1,4 @@
-import { generateEntries } from '$lib';
+import { generateEntries } from '#lib';
 import type { EntryGenerator } from './$types';
 
 export const entries: EntryGenerator = () => {

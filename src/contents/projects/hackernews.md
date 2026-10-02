@@ -1,7 +1,7 @@
 ---
 title: Hacker News
 description: This is a simple project that connects to the HackerNews API and displays the latest articles using React (with Vite) and Tailwind CSS.
-poster: $lib/assets/projects/hackernews.webp
+poster: '#lib/assets/projects/hackernews.webp'
 techstack:
   - React
 ---

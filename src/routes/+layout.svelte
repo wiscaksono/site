@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { MediaQuery } from 'svelte/reactivity';
-	import { PUBLIC_UMAMI_TRACKING_ID } from '$env/static/public';
+	import { PUBLIC_UMAMI_TRACKING_ID } from '$app/env/public';
 
 	import '../app.css';
-	import { dev } from '$app/environment';
-	import Header from '$lib/components/layout/header/header.svelte';
-	import Navbar from '$lib/components/layout/navbar/navbar.svelte';
+	import { dev } from '$app/env';
+	import Header from '#lib/components/layout/header/header.svelte';
+	import Navbar from '#lib/components/layout/navbar/navbar.svelte';
 
 	let { data, children } = $props();
 
@@ -53,7 +53,8 @@
 </script>
 
 <svelte:window onmouseup={handleMouseUp} onmousemove={handleMouseMove} />
-<svelte:document onfullscreenchange={handleFullscreenChange} />
+
+<svelte:document onfullscreenchange={handleFullscreenChange}></svelte:document>
 
 <svelte:head>
 	<!-- eslint-disable-next-line svelte/no-at-html-tags -->
@@ -72,6 +73,7 @@
 	style:transition={dragging ? 'none' : 'all 0.2s ease-out'}
 >
 	<Header {isFullscreen} {onMouseDown} {toggleFullscreen} />
+
 	{@render children()}
 	<Navbar />
 </main>

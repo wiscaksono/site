@@ -1,4 +1,4 @@
-import { identity } from '$lib/identity';
+import { identity } from '#lib/identity.js';
 
 type SchemaOrgEntity = {
 	'@type': string;

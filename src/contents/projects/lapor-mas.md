@@ -1,7 +1,7 @@
 ---
 title: Lapormas
 description: Lapormas (Laporan Masalah) is a pioneering initiative by PT PLN (Persero) UP2B DKI Jakarta & Banten designed to document and monitor the process of repairing damage to substations or bays within the company. This pilot project serves as an integral tool for efficiently managing and addressing issues related to the company's infrastructure. LaporMas aims to streamline the reporting and resolution process, contributing to the overall operational effectiveness of PT PLN (Persero) UP2B DKI Jakarta & Banten. Through this innovative approach, the company endeavors to enhance its responsiveness and ensure the seamless functioning of its critical facilities.
-poster: $lib/assets/projects/lapor-mas.webp
+poster: '#lib/assets/projects/lapor-mas.webp'
 techstack:
   - Go
 ---

@@ -1,7 +1,7 @@
 ---
 title: Travel Awal
 description: Travelawal is a user-friendly travel planning website that helps users find the best deals on flights, hotels, and more. It offers easy navigation and search options by destination, date, and price. Users can also compare prices from various travel agencies. Additionally, Travelawal provides travel guides and articles on popular and offbeat destinations, as well as travel tips and insights. It's a one-stop platform for hassle-free trip planning and savings.
-poster: $lib/assets/projects/travelawal.webp
+poster: '#lib/assets/projects/travelawal.webp'
 techstack:
   - React
 ---

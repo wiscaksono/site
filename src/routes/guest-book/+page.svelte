@@ -2,7 +2,7 @@
 	import { onDestroy } from 'svelte';
 	import { createWebHaptics } from 'web-haptics/svelte';
 
-	import Metadata from '$lib/components/metadata.svelte';
+	import Metadata from '#lib/components/metadata.svelte';
 
 	import { getGuestsBook, insertGuestBook, toggleLikeGuestBook, deleteGuestBook } from './data.remote';
 
@@ -31,9 +31,8 @@
 			<input
 				required
 				autofocus
-				type="text"
+				{...insertGuestBook.fields.content.as('text')}
 				minLength={3}
-				name="content"
 				maxLength={140}
 				autoComplete="off"
 				disabled={!data.user}

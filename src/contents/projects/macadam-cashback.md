@@ -1,7 +1,7 @@
 ---
 title: Macadam Cashback
 description: As the frontend developer behind Macadam Cashback Extension, I transformed Figma designs into code, shaping a 90% conversion for this revolutionary Chrome extension. Unlike other 'walk to earn' apps, Macadam Cashback is dedicated to rewarding your online shopping activity. Discover a seamless blend of ReactJS and Tailwind CSS that brings an intuitive UI to life. Unlock real-time cashback alerts and a visually stunning interface, making every online purchase a rewarding experience. Download Macadam Cashback today and turn your clicks into cash while enjoying a delightful shopping journey.
-poster: $lib/assets/projects/macadam-cashback.webp
+poster: '#lib/assets/projects/macadam-cashback.webp'
 techstack:
   - React
 ---

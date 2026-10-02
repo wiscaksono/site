@@ -1,4 +1,4 @@
-import type { Picture, Project } from '$lib/types';
+import type { Picture, Project } from '#lib/types.js';
 import type { LayoutServerLoad } from './$types';
 
 const posterModules = import.meta.glob('/src/lib/assets/projects/*.{webp,png,gif}', {
@@ -9,7 +9,7 @@ const posterModules = import.meta.glob('/src/lib/assets/projects/*.{webp,png,gif
 
 function resolvePoster(poster: string | Picture): Picture {
 	if (typeof poster !== 'string') return poster;
-	const mod = posterModules[poster.replace('$lib', '/src/lib')];
+	const mod = posterModules[poster.replace('#lib', '/src/lib')];
 	if (!mod) throw new Error(`Missing poster ${poster}`);
 	return mod;
 }

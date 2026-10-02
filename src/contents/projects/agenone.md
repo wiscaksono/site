@@ -1,7 +1,7 @@
 ---
 title: Agenone
 description: Experience the epitome of digital innovation with Agenone, a dynamic agency landing website meticulously crafted using Next.js, Tailwind CSS, and GSAP technology. Dive into a visually stunning hero section, conveying the agency's core advantages, explore an exhaustive services segment showcasing their diverse offerings, grasp their expertise through an experience statistic, peruse a portfolio highlighting past triumphs, read glowing testimonials from satisfied clients, and find a compelling call-to-action beckoning potential clients to initiate contact.
-poster: $lib/assets/projects/agenone.webp
+poster: '#lib/assets/projects/agenone.webp'
 techstack:
   - Next
 ---

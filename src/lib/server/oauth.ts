@@ -1,5 +1,5 @@
 import { randomBytes, timingSafeEqual } from 'node:crypto';
-import { BASE_URL, GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET } from '$env/static/private';
+import { BASE_URL, GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET } from '$app/env/private';
 
 const AUTHORIZATION_ENDPOINT = 'https://github.com/login/oauth/authorize';
 const TOKEN_ENDPOINT = 'https://github.com/login/oauth/access_token';

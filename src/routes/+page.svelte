@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { onDestroy } from 'svelte';
+	import { SvelteSet } from 'svelte/reactivity';
 	import { createWebHaptics } from 'web-haptics/svelte';
 
-	import Metadata from '$lib/components/metadata.svelte';
+	import Metadata from '#lib/components/metadata.svelte';
 
 	const { trigger, destroy } = createWebHaptics();
 	onDestroy(destroy);
@@ -63,7 +64,7 @@
 	let codeEl = $state<HTMLElement | null>(null);
 
 	let figletInstance: typeof import('figlet').default | null = null;
-	const parsedFonts = new Set<string>();
+	const parsedFonts = new SvelteSet<string>();
 
 	async function getFiglet() {
 		if (figletInstance) return figletInstance;
@@ -123,9 +124,9 @@
 
 	$effect(() => {
 		// re-run on art / element mount and window resize
-		art;
-		codeEl;
-		sectionEl;
+		void art;
+		void codeEl;
+		void sectionEl;
 		if (!codeEl || !sectionEl) return;
 		fit();
 		const ro = new ResizeObserver(() => fit());

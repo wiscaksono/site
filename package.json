@@ -20,9 +20,10 @@
 	"devDependencies": {
 		"@eslint/compat": "^2.1.0",
 		"@eslint/js": "^10.0.1",
-		"@sveltejs/adapter-vercel": "^6.3.4",
+		"@sveltejs/adapter-vercel": "^7.0.0",
 		"@sveltejs/enhanced-img": "^0.11.0",
-		"@sveltejs/kit": "^2.70.3",
+		"@sveltejs/kit": "^3.0.0",
+		"@sveltejs/load-config": "^0.2.2",
 		"@sveltejs/vite-plugin-svelte": "^7.3.0",
 		"@tailwindcss/typography": "^0.5.20",
 		"@tailwindcss/vite": "^4.3.3",
@@ -40,7 +41,7 @@
 		"svelte": "^5.57.0",
 		"svelte-check": "^4.7.6",
 		"tailwindcss": "^4.3.3",
-		"typescript": "^5.9.3",
+		"typescript": "^6.0.0",
 		"typescript-eslint": "^8.69.0",
 		"vite": "^8.2.2"
 	},
@@ -54,5 +55,9 @@
 		"remark-toc": "^9.0.0",
 		"shiki": "^4.4.3",
 		"web-haptics": "^0.0.6"
+	},
+	"imports": {
+		"#lib": "./src/lib/index.js",
+		"#lib/*": "./src/lib/*"
 	}
 }

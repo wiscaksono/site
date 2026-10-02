@@ -1,7 +1,7 @@
 ---
 title: Nugsstudio
 description: Nugsstudio is a groundbreaking online platform created by designer Andrie Nugi, empowering him to showcase and sell his unique font designs. Built with cutting-edge technologies like Next.js, tRPC, and p5.js, Nugsstudio offers a seamless and secure experience for both the creator and buyers.
-poster: $lib/assets/projects/nugsstudio.webp
+poster: '#lib/assets/projects/nugsstudio.webp'
 techstack:
   - Next
 ---

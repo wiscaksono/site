@@ -1,7 +1,7 @@
 ---
 title: Blue Bank
 description: Blue Bank is a cutting-edge mobile banking application developed using React Native. It provides a seamless and secure banking experience, allowing users to perform various transactions, manage their accounts, and access essential banking services on the go. The app features QR code scanning, real-time balance tracking, secure authentication, and more, making it a comprehensive solution for modern banking needs.
-poster: $lib/assets/projects/blue-bank.webp
+poster: '#lib/assets/projects/blue-bank.webp'
 techstack:
   - React Native
 ---

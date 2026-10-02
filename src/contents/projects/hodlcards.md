@@ -1,7 +1,7 @@
 ---
 title: HodlCards
 description: Hodlcards is a unique website that enables users to mint NFTs representing physical poker decks. Developed using React, Tailwind CSS, and React Slick, Hodlcards offers an engaging experience for crypto enthusiasts. Each NFT grants users access to a private Discord server and provides regular whitelist spots for participation in other crypto projects. The platform also features an entertaining spinwheel game where users have the chance to win real poker decks.
-poster: $lib/assets/projects/hodlcards.webp
+poster: '#lib/assets/projects/hodlcards.webp'
 techstack:
   - React
 ---

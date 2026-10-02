@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { page } from '$app/state';
 	import { onDestroy } from 'svelte';
-	import { browser } from '$app/environment';
+	import { browser } from '$app/env';
 	import { createWebHaptics } from 'web-haptics/svelte';
 
-	import Icon from '$lib/components/icon.svelte';
+	import Icon from '#lib/components/icon.svelte';
 
 	import type { LayoutProps } from './$types';
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Metadata from '$lib/components/metadata.svelte';
+	import Metadata from '#lib/components/metadata.svelte';
 
 	import type { PageProps } from './$types';
 
